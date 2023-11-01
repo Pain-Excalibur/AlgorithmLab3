@@ -9,7 +9,7 @@ namespace AlgorithmLab3
     public class OurStack
     {
         //top node
-        private static Node topElem;
+        public static Node topElem;
 
         //Push element to stack
         public static void Push(object data)
@@ -60,6 +60,11 @@ namespace AlgorithmLab3
                 Console.Write(current.data + " ");
                 current = current.prevElem;
             }
+        }
+
+        public static void Clear()
+        {
+            topElem = null;
         }
     }
 

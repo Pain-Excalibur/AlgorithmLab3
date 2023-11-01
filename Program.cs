@@ -1,5 +1,6 @@
 ﻿using AlgorithmLab3;
 using System.Diagnostics;
+using System.Linq.Expressions;
 using System.Numerics;
 using System.Runtime.Intrinsics;
 using System.Text;
@@ -8,28 +9,56 @@ class Program
 {
     public static void Main ()
     {
-
-        SequencesHandler(ReadFromInputTxt());
+        Task2();
+        Task3();
+        //сделать в 4 таске чтобы префиксную в постфиксную
+        //SolveExpression(string expression)//СЮДА постфиксную форму передавать и он возвращает СЛОЖНОСТЬ СМОТРЕТЬ ЗАДАНИЕ
 
     }
 
-    public static string[] ReadFromInputTxt()
+    //Tasks organizer
+
+    public static void Task2()
+    {
+        SequencesHandler(ReadSeqFromFile());
+    }
+
+    public static void Task3()
+    {
+        double[] timeArray = TimeMeasuringSequencesHandler(ReadSeqFromFile());
+
+        StreamWriter sw = File.CreateText("C:\\Users\\ACGuardian\\Desktop\\output.txt");
+        foreach (double i in timeArray)
+        {
+            sw.WriteLine(i);
+        }
+        sw.Close();
+        Process.Start("notepad.exe", "C:\\Users\\ACGuardian\\Desktop\\output.txt");
+    }
+
+    
+
+    //Methods
+
+    public static string[] ReadSeqFromFile()
     {
         Console.WriteLine("Введите расположение файла input.txt");
 
         string path = Console.ReadLine();
 
-        path = "C:\\Users\\ACGuardian\\Desktop\\input.txt";
+        path = "C:\\Users\\ACGuardian\\Desktop\\input.txt";//ПЕРЕПИСАТЬ ВСЕМ ДЛЯ СЕБЯ
 
         string[] sequences = File.ReadAllLines(path);
 
         return sequences;
     }
+
     public static void SequencesHandler(string[] sequences)
     {
-        foreach (string sequence in sequences)
+        for (int i = 0; i < sequences.Length; i++)
         {
-            string[] partedSequence = sequence.Split(' ');
+            string[] partedSequence = sequences[i].Split(' ');
+
             foreach (string sequenceInstance in partedSequence)
             {
                 try
@@ -62,18 +91,19 @@ class Program
                     Console.WriteLine(ex);
                 }
             }
+            OurStack.Clear();
         }
     }
 
-    public static void TimeMeasuringSequencesHandler(string[] sequences)
+    public static double[] TimeMeasuringSequencesHandler(string[] sequences)
     {
-        foreach (string sequence in sequences)
+        double[] timeArray = new double[sequences.Length];
+        for (int i = 0; i < sequences.Length; i++)
         {
-            string[] partedSequence = sequence.Split(' ');
-
-
             Stopwatch timeOfSequence = new Stopwatch();
             timeOfSequence.Start();
+
+            string[] partedSequence = sequences[i].Split(' ');
             
             foreach (string sequenceInstance in partedSequence)
             {
@@ -107,9 +137,66 @@ class Program
                     Console.WriteLine(ex);
                 }
             }
-
+            OurStack.Clear();
             timeOfSequence.Stop();
-            //TODO timeOfSequence.ElapsedTicks / 10000000.0d;
+            timeArray[i] = timeOfSequence.ElapsedTicks / 10000000.0d;
         }
+        return timeArray;
     }
+
+    public static double SolveExpression(string expression)//СЮДА постфиксную форму передавать
+    {
+        string[] partedExpression = expression.Split(" ");
+        int difficulty = 0;
+        foreach (string i in partedExpression) 
+        {
+            if (Double.TryParse(i, out double number))
+            {
+                OurStack.Push(number);
+            }
+            else
+            {
+                difficulty++;
+                switch (i)//(+, -, *, :, ^, ln, cos, sin, sqrt, «)». 
+                {
+                    case "+":
+                        OurStack.topElem.prevElem.data = Convert.ToDouble(OurStack.topElem.prevElem.data) + Convert.ToDouble(OurStack.topElem.data);
+                        OurStack.Pop();
+                        break;
+                    case "-":
+                        OurStack.topElem.prevElem.data = Convert.ToDouble(OurStack.topElem.prevElem.data) - Convert.ToDouble(OurStack.topElem.data);
+                        OurStack.Pop();
+                        break;
+                    case "*":
+                        OurStack.topElem.prevElem.data = Convert.ToDouble(OurStack.topElem.prevElem.data) * Convert.ToDouble(OurStack.topElem.data);
+                        OurStack.Pop();
+                        break;
+                    case "/":
+                    case ":":
+                        OurStack.topElem.prevElem.data = Convert.ToDouble(OurStack.topElem.prevElem.data) / Convert.ToDouble(OurStack.topElem.data);
+                        OurStack.Pop();
+                        break;
+                    case "^":
+                        OurStack.topElem.prevElem.data = Math.Pow(Convert.ToDouble(OurStack.topElem.prevElem.data), Convert.ToDouble(OurStack.topElem.data));
+                        OurStack.Pop();
+                        break;
+                    case "ln":
+                        OurStack.topElem.data = Math.Log(Convert.ToDouble(OurStack.topElem.data));
+                        break;
+                    case "cos":
+                        OurStack.topElem.data = Math.Cos(Convert.ToDouble(OurStack.topElem.data));
+                        break;
+                    case "sin":
+                        OurStack.topElem.data = Math.Sin(Convert.ToDouble(OurStack.topElem.data));
+                        break;
+                    case "sqrt":
+                        OurStack.topElem.data = Math.Sqrt(Convert.ToDouble(OurStack.topElem.data));
+                        break;
+                }
+            }
+        }
+        Console.WriteLine(OurStack.Pop());
+        return difficulty;
+    }
+
 }
