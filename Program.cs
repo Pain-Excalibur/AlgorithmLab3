@@ -36,6 +36,10 @@ class Program
         Process.Start("notepad.exe", "C:\\Users\\ACGuardian\\Desktop\\output.txt");
     }
 
+    public static void Task4()
+    {
+        PostFix(ReadSeqFromFile());
+    }
     
 
     //Methods
@@ -46,7 +50,7 @@ class Program
 
         string path = Console.ReadLine();
 
-        path = "C:\\Users\\ACGuardian\\Desktop\\input.txt";//ПЕРЕПИСАТЬ ВСЕМ ДЛЯ СЕБЯ
+        path = "C:\\Users\\ACGuardian\\Desktop\\input.txt";//ПЕРЕПИСАТЬ ВСЕМ ДЛЯ СЕБЯ 
 
         string[] sequences = File.ReadAllLines(path);
 
@@ -199,4 +203,65 @@ class Program
         return difficulty;
     }
 
+
+
+    /// Я насрал
+    /// Я насрал
+    /// Я насрал
+    /// Я насрал 
+    /// Я насрал
+    
+    public static void PostFix(string[] sequences)
+    {
+        var stack = new Stack<string>();
+
+        var queue = new Queue<string>();
+
+
+        foreach (string sequence in sequences)
+        {
+            bool success = int.TryParse(sequence, out int number);
+            if (success)
+            {
+                queue.Enqueue(sequence);
+            }
+            else
+            {
+                if (sequence == "(")
+                    stack.Push(sequence);
+                if (sequence == ")")
+                    stack.Pop();
+                if ((sequence == "+") || (sequence == "-"))
+                {
+                    string top = stack.Peek();
+                    if ((!stack.Any()) || (top == "("))
+                        stack.Push(sequence);
+                    else if ((top == "*") || (top == "/"))
+                    {
+                        stack.Pop();
+                        stack.Push(sequence);
+                    }
+                    else
+                        stack.Push(sequence);
+                }
+                if ((sequence == "*") || (sequence == "/"))
+                {
+                    string top = stack.Peek();
+                    if ((top == "*") || (top == "/"))
+                    {
+                        stack.Pop();
+                        stack.Push(sequence);
+                    }
+                }
+            }
+        }
+        string[] array = stack.ToArray();
+
+        for (int i = 0; i < array.Length; i++)
+        {
+            if (array[i] == "(")
+                array[i] = " ";
+            queue.Enqueue(array[i]);
+        }
+    }
 }
