@@ -12,7 +12,7 @@ namespace AlgorithmLab3
         public static Node topElem;
 
         //Push element to stack
-        public static void Push(object data)
+        public static void Push(string data)
         {
             Node nodeToAdd = new Node()
             {
@@ -23,11 +23,11 @@ namespace AlgorithmLab3
         }
 
         //Pop element from stack
-        public static object Pop() 
+        public static string Pop() 
         {
-            if (topElem == null) 
+            if (topElem == null)
             {
-                throw new Exception ("Stak is empty!");
+                return null;
             }
             Node elemToPop = topElem;
             topElem = topElem.prevElem;
@@ -35,11 +35,11 @@ namespace AlgorithmLab3
         }
 
         //Return top element
-        public static object Top() 
+        public static string Top() 
         {
             if (topElem == null)
             {
-                throw new Exception("Stak is empty!");
+                return null;
             }
             return topElem.data;
         }
@@ -66,15 +66,14 @@ namespace AlgorithmLab3
         {
             topElem = null;
         }
-    }
+        //node
+        public class Node
+        {
+            //previous node
+            public Node? prevElem;
 
-    //node
-    public class Node
-    {
-        //previous node
-        public Node? prevElem;
-
-        //current node data
-        public object? data;
+            //current node data
+            public string? data;
+        }
     }
 }

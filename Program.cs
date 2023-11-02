@@ -7,12 +7,13 @@ using System.Text;
 
 class Program
 {
-    public static void Main ()
+    public static void Main()
     {
-        Task2();
-        Task3();
+        //Task2();
+        //Task3();
         //сделать в 4 таске чтобы префиксную в постфиксную
         //SolveExpression(string expression)//СЮДА постфиксную форму передавать и он возвращает СЛОЖНОСТЬ СМОТРЕТЬ ЗАДАНИЕ
+        Task4();
 
     }
 
@@ -38,9 +39,10 @@ class Program
 
     public static void Task4()
     {
-        PostFix(ReadSeqFromFile());
+        foreach (string expression in ReadSeqFromFile())
+            Console.WriteLine("Difficulty: " + SolveExpression(expression));
     }
-    
+
 
     //Methods
 
@@ -48,9 +50,11 @@ class Program
     {
         Console.WriteLine("Введите расположение файла input.txt");
 
-        string path = Console.ReadLine();
+        //string path = Console.ReadLine();
 
-        path = "C:\\Users\\ACGuardian\\Desktop\\input.txt";//ПЕРЕПИСАТЬ ВСЕМ ДЛЯ СЕБЯ 
+        string path;
+
+        path = "C:\\Users\\ACGuardian\\Desktop\\input2.txt";//ПЕРЕПИСАТЬ ВСЕМ ДЛЯ СЕБЯ 
 
         string[] sequences = File.ReadAllLines(path);
 
@@ -65,35 +69,29 @@ class Program
 
             foreach (string sequenceInstance in partedSequence)
             {
-                try
+                switch (sequenceInstance[0])
                 {
-                    switch (sequenceInstance[0])
-                    {
-                        case '1':
-                            OurStack.Push(sequenceInstance.Substring(2));
-                            break;
-                        case '2':
-                            Console.Write(OurStack.Pop() + ", ");
-                            break;
-                        case '3':
-                            Console.Write(OurStack.Top() + ", ");
-                            break;
-                        case '4':
-                            Console.Write(Convert.ToString(OurStack.IsEmpty()) + ", ");
-                            break;
-                        case '5':
-                            OurStack.Print();
-                            Console.Write(", ");
-                            break;
-                        default:
-                            Console.WriteLine("Unknown Command!");
-                            break;
-                    }
+                    case '1':
+                        OurStack.Push(sequenceInstance.Substring(2));
+                        break;
+                    case '2':
+                        Console.Write(OurStack.Pop() + ", ");
+                        break;
+                    case '3':
+                        Console.Write(OurStack.Top() + ", ");
+                        break;
+                    case '4':
+                        Console.Write(Convert.ToString(OurStack.IsEmpty()) + ", ");
+                        break;
+                    case '5':
+                        OurStack.Print();
+                        Console.Write(", ");
+                        break;
+                    default:
+                        Console.WriteLine("Unknown Command!");
+                        break;
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
+
             }
             OurStack.Clear();
         }
@@ -108,38 +106,32 @@ class Program
             timeOfSequence.Start();
 
             string[] partedSequence = sequences[i].Split(' ');
-            
+
             foreach (string sequenceInstance in partedSequence)
             {
-                try
+                switch (sequenceInstance[0])
                 {
-                    switch (sequenceInstance[0])
-                    {
-                        case '1':
-                            OurStack.Push(sequenceInstance.Substring(2));
-                            break;
-                        case '2':
-                            Console.Write(OurStack.Pop() + ", ");
-                            break;
-                        case '3':
-                            Console.Write(OurStack.Top() + ", ");
-                            break;
-                        case '4':
-                            Console.Write(Convert.ToString(OurStack.IsEmpty()) + ", ");
-                            break;
-                        case '5':
-                            OurStack.Print();
-                            Console.Write(", ");
-                            break;
-                        default:
-                            Console.WriteLine("Unknown Command!");
-                            break;
-                    }
+                    case '1':
+                        OurStack.Push(sequenceInstance.Substring(2));
+                        break;
+                    case '2':
+                        Console.Write(OurStack.Pop() + ", ");
+                        break;
+                    case '3':
+                        Console.Write(OurStack.Top() + ", ");
+                        break;
+                    case '4':
+                        Console.Write(Convert.ToString(OurStack.IsEmpty()) + ", ");
+                        break;
+                    case '5':
+                        OurStack.Print();
+                        Console.Write(", ");
+                        break;
+                    default:
+                        Console.WriteLine("Unknown Command!");
+                        break;
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
+
             }
             OurStack.Clear();
             timeOfSequence.Stop();
@@ -150,13 +142,17 @@ class Program
 
     public static double SolveExpression(string expression)//СЮДА постфиксную форму передавать
     {
+
         string[] partedExpression = expression.Split(" ");
         int difficulty = 0;
-        foreach (string i in partedExpression) 
+
+        string[] formattedExpression = InFixToPostFix(partedExpression);
+
+        foreach (string i in formattedExpression)
         {
             if (Double.TryParse(i, out double number))
             {
-                OurStack.Push(number);
+                OurStack.Push(i);
             }
             else
             {
@@ -164,42 +160,42 @@ class Program
                 switch (i)//(+, -, *, :, ^, ln, cos, sin, sqrt, «)». 
                 {
                     case "+":
-                        OurStack.topElem.prevElem.data = Convert.ToDouble(OurStack.topElem.prevElem.data) + Convert.ToDouble(OurStack.topElem.data);
+                        OurStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(OurStack.topElem.prevElem.data) + Convert.ToDouble(OurStack.topElem.data));
                         OurStack.Pop();
                         break;
                     case "-":
-                        OurStack.topElem.prevElem.data = Convert.ToDouble(OurStack.topElem.prevElem.data) - Convert.ToDouble(OurStack.topElem.data);
+                        OurStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(OurStack.topElem.prevElem.data) - Convert.ToDouble(OurStack.topElem.data));
                         OurStack.Pop();
                         break;
                     case "*":
-                        OurStack.topElem.prevElem.data = Convert.ToDouble(OurStack.topElem.prevElem.data) * Convert.ToDouble(OurStack.topElem.data);
+                        OurStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(OurStack.topElem.prevElem.data) * Convert.ToDouble(OurStack.topElem.data));
                         OurStack.Pop();
                         break;
                     case "/":
                     case ":":
-                        OurStack.topElem.prevElem.data = Convert.ToDouble(OurStack.topElem.prevElem.data) / Convert.ToDouble(OurStack.topElem.data);
+                        OurStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(OurStack.topElem.prevElem.data) / Convert.ToDouble(OurStack.topElem.data));
                         OurStack.Pop();
                         break;
                     case "^":
-                        OurStack.topElem.prevElem.data = Math.Pow(Convert.ToDouble(OurStack.topElem.prevElem.data), Convert.ToDouble(OurStack.topElem.data));
+                        OurStack.topElem.prevElem.data = Convert.ToString(Math.Pow(Convert.ToDouble(OurStack.topElem.prevElem.data), Convert.ToDouble(OurStack.topElem.data)));
                         OurStack.Pop();
                         break;
                     case "ln":
-                        OurStack.topElem.data = Math.Log(Convert.ToDouble(OurStack.topElem.data));
+                        OurStack.topElem.data = Convert.ToString(Math.Log(Convert.ToDouble(OurStack.topElem.data)));
                         break;
                     case "cos":
-                        OurStack.topElem.data = Math.Cos(Convert.ToDouble(OurStack.topElem.data));
+                        OurStack.topElem.data = Convert.ToString(Math.Cos(Convert.ToDouble(OurStack.topElem.data)));
                         break;
                     case "sin":
-                        OurStack.topElem.data = Math.Sin(Convert.ToDouble(OurStack.topElem.data));
+                        OurStack.topElem.data = Convert.ToString(Math.Sin(Convert.ToDouble(OurStack.topElem.data)));
                         break;
                     case "sqrt":
-                        OurStack.topElem.data = Math.Sqrt(Convert.ToDouble(OurStack.topElem.data));
+                        OurStack.topElem.data = Convert.ToString(Math.Sqrt(Convert.ToDouble(OurStack.topElem.data)));
                         break;
                 }
             }
         }
-        Console.WriteLine(OurStack.Pop());
+        Console.WriteLine("Result: " + OurStack.Pop());
         return difficulty;
     }
 
@@ -210,58 +206,117 @@ class Program
     /// Я насрал
     /// Я насрал 
     /// Я насрал
-    
-    public static void PostFix(string[] sequences)
+
+    public static string[] InFixToPostFix(string[] partedSequence)
     {
-        var stack = new Stack<string>();
-
-        var queue = new Queue<string>();
+        StringBuilder expression = new StringBuilder();
 
 
-        foreach (string sequence in sequences)
+
+        foreach (string sequenceInstance in partedSequence)
         {
-            bool success = int.TryParse(sequence, out int number);
-            if (success)
+            if (int.TryParse(sequenceInstance, out int number))
             {
-                queue.Enqueue(sequence);
+                expression.Append(sequenceInstance + " ");
             }
+            else if (sequenceInstance == "sin" || sequenceInstance == "cos" || sequenceInstance == "sqrt" || sequenceInstance == "ln" || sequenceInstance == "(")
+            {
+                OurStack.Push(sequenceInstance);
+            }
+            else if (sequenceInstance == ")")
+            {
+
+
+
+                while (OurStack.Top() != "(")
+                {
+                    expression.Append(OurStack.Pop() + " ");
+                }
+                OurStack.Pop();
+            }
+            else if (sequenceInstance == "+" || sequenceInstance == "-" || sequenceInstance == "*" || sequenceInstance == "/" || sequenceInstance == ":" || sequenceInstance == "^")
+            {
+                while (!OurStack.IsEmpty() && ((OurStack.Top() == "^") || ((OurStack.Top() == "*" || OurStack.Top() == "/" || OurStack.Top() == ":" || OurStack.Top() == "^") && (sequenceInstance != "^")) || ((OurStack.Top() == "+" || OurStack.Top() == "-") && (sequenceInstance == "+" || sequenceInstance == "-"))))
+                {
+                    expression.Append(OurStack.Pop() + " ");
+                }
+                OurStack.Push(sequenceInstance);
+            }
+        }
+
+
+
+        while (!OurStack.IsEmpty())
+        {
+            if (OurStack.Top() != "(")
+                expression.Append(OurStack.Pop() + " ");
             else
-            {
-                if (sequence == "(")
-                    stack.Push(sequence);
-                if (sequence == ")")
-                    stack.Pop();
-                if ((sequence == "+") || (sequence == "-"))
-                {
-                    string top = stack.Peek();
-                    if ((!stack.Any()) || (top == "("))
-                        stack.Push(sequence);
-                    else if ((top == "*") || (top == "/"))
-                    {
-                        stack.Pop();
-                        stack.Push(sequence);
-                    }
-                    else
-                        stack.Push(sequence);
-                }
-                if ((sequence == "*") || (sequence == "/"))
-                {
-                    string top = stack.Peek();
-                    if ((top == "*") || (top == "/"))
-                    {
-                        stack.Pop();
-                        stack.Push(sequence);
-                    }
-                }
-            }
+                OurStack.Pop();
         }
-        string[] array = stack.ToArray();
+        expression.Length--;
 
-        for (int i = 0; i < array.Length; i++)
-        {
-            if (array[i] == "(")
-                array[i] = " ";
-            queue.Enqueue(array[i]);
-        }
+        return expression.ToString().Split(" ");
+
+        //var stack = new Stack<string>();
+
+        //var queue = new Queue<string>();
+
+
+        //foreach (string sequenceInstance in partedSequence)
+        //{
+        //    if (int.TryParse(sequenceInstance, out int number))
+        //    {
+        //        queue.Enqueue(sequenceInstance);
+        //    }
+        //    else
+        //    {
+        //        if (sequenceInstance == "(")
+        //            stack.Push(sequenceInstance);
+        //        if (sequenceInstance == ")")
+        //            while(stack.Any())
+        //                queue.Enqueue(stack.Pop());
+        //        if ((sequenceInstance == "+") || (sequenceInstance == "-"))
+        //        {
+        //            if (stack.Any() && (stack.Peek() == "("))
+        //            {
+        //                if (stack.Peek() == "(")
+        //                    stack.Pop();
+        //                stack.Push(sequenceInstance);
+        //            }
+        //            else if (stack.Any() && ((stack.Peek() == "*") || (stack.Peek() == "/")))
+        //            {
+        //                stack.Pop();
+        //                stack.Push(sequenceInstance);
+        //            }
+        //            else
+        //                stack.Push(sequenceInstance);
+        //        }
+        //        if ((sequenceInstance == "*") || (sequenceInstance == "/"))
+        //        {
+        //            if ((stack.Peek() == "*") || (stack.Peek() == "/"))
+        //            {
+        //                while (stack.Any() && (stack.Peek() == "(" || stack.Peek() == "-" || stack.Peek() == "+"))
+        //                {
+        //                    if (stack.Peek() == "(")
+        //                        stack.Pop();
+        //                    queue.Enqueue(stack.Pop());
+        //                }
+
+        //            }
+        //            stack.Push(sequenceInstance);
+        //        }
+        //    }
+        //}
+        //string[] array = queue.ToArray();
+
+        //for (int i = 0; i < array.Length; i++)
+        //{
+        //    if (array[i] == "(")
+        //        array[i] = " ";
+        //}
+        //return array;
+
+
+
     }
 }
