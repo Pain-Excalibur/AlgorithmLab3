@@ -9,12 +9,12 @@ namespace AlgorithmLab3
     public class OurStack
     {
         //top node
-        public static Node topElem;
+        public static StackNode topElem;
 
         //Push element to stack
         public static void Push(string data)
         {
-            Node nodeToAdd = new Node()
+            StackNode nodeToAdd = new StackNode()
             {
                 data = data,
                 prevElem = topElem
@@ -29,7 +29,7 @@ namespace AlgorithmLab3
             {
                 return null;
             }
-            Node elemToPop = topElem;
+            StackNode elemToPop = topElem;
             topElem = topElem.prevElem;
             return elemToPop.data;
         }
@@ -53,7 +53,7 @@ namespace AlgorithmLab3
         
         public static void Print()
         {
-            Node current = topElem;
+            StackNode current = topElem;
 
             while (current != null)
             {
@@ -66,14 +66,16 @@ namespace AlgorithmLab3
         {
             topElem = null;
         }
-        //node
-        public class Node
-        {
-            //previous node
-            public Node? prevElem;
+        
+    }
 
-            //current node data
-            public string? data;
-        }
+    //node
+    public class StackNode
+    {
+        //previous node
+        public StackNode? prevElem;
+
+        //current node data
+        public string? data;
     }
 }
