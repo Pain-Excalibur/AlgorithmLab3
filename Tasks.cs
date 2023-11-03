@@ -220,12 +220,26 @@ namespace AlgorithmLab3
                                 if (isStack)
                                 {
                                     //csstack
-                                    Console.Write(csStack.Peek() + ", ");
+                                    try
+                                    {
+                                        Console.Write(csStack.Peek() + ", ");
+                                    }
+                                    catch
+                                    {
+                                        Console.Write("");
+                                    }
                                 }
                                 else
                                 {
                                     //csqueue
-                                    Console.Write(csQueue.Peek() + ", ");
+                                    try
+                                    {
+                                        Console.Write(csQueue.Peek() + ", ");
+                                    }
+                                    catch
+                                    {
+                                        Console.Write("");
+                                    }
                                 }
                             }
                             else
