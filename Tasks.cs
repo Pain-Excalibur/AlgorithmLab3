@@ -31,13 +31,13 @@ namespace AlgorithmLab3
                 {
                     double[] timeArray = SequencesHandler(ReadSeqFromFile());
 
-                    StreamWriter sw = File.CreateText("%temp%\\output.txt");
+                    StreamWriter sw = File.CreateText("output.txt");
                     foreach (double i in timeArray)
                     {
                         sw.WriteLine(i);
                     }
                     sw.Close();
-                    Process.Start("notepad.exe", "%temp%\\output.txt");
+                    Process.Start("notepad.exe", "output.txt");
 
                 }
                 else
