@@ -18,10 +18,9 @@ namespace AlgorithmLab3
         {
             Survey();
 
-            //DOALG
             if (isPostfixTask)
             {
-                if (isTime)//idkrn
+                if (isTime)
                 {
                     List<double> timeArray = new List<double>();
 
@@ -358,7 +357,7 @@ namespace AlgorithmLab3
             return timeArray;
         }
 
-        public static double SolveExpression(string expression)//СЮДА постфиксную форму передавать
+        public static double SolveExpression(string expression)
         {
             OurStack ourStack = new OurStack();
 
@@ -376,7 +375,7 @@ namespace AlgorithmLab3
                 else
                 {
                     difficulty++;
-                    switch (i)//(+, -, *, :, ^, ln, cos, sin, sqrt, «)». 
+                    switch (i)
                     {
                         case "+":
                             ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) + Convert.ToDouble(ourStack.topElem.data));
