@@ -10,8 +10,8 @@ namespace AlgorithmLab3
     internal class Tasks
     {
         public static bool isStack = false;
-        public static bool isTime = false;//done
-        public static bool isPostfixTask = false;//hard
+        public static bool isTime = false;
+        public static bool isPostfixTask = false;
         public static bool isCs = false;
 
         public static void Start()
@@ -21,9 +21,34 @@ namespace AlgorithmLab3
             //DOALG
             if (isPostfixTask)
             {
-                //postfixtask
-                foreach (string expression in ReadSeqFromFile())
-                    Console.WriteLine("Difficulty: " + SolveExpression(expression));
+                if (isTime)//idkrn
+                {
+                    List<double> timeArray = new List<double>();
+
+                    foreach (string expression in ReadSeqFromFile())
+                    {
+                        Stopwatch timeOfSequence = new Stopwatch();
+                        timeOfSequence.Start();
+                        Console.WriteLine("Difficulty: " + SolveExpression(expression));
+                        OurStack.Clear();
+                        timeOfSequence.Stop();
+                        timeArray.Add(timeOfSequence.ElapsedTicks / 10000000.0d);
+                    }
+
+                    StreamWriter sw = File.CreateText("output.txt");
+                    foreach (double i in timeArray)
+                    {
+                        sw.WriteLine(i);
+                    }
+                    sw.Close();
+                    Process.Start("notepad.exe", "output.txt");
+
+                }
+                else
+                {
+                    foreach (string expression in ReadSeqFromFile())
+                        Console.WriteLine("Difficulty: " + SolveExpression(expression));
+                }
             }
             else
             {
@@ -341,7 +366,7 @@ namespace AlgorithmLab3
 
             foreach (string i in formattedExpression)
             {
-                if (Double.TryParse(i, out double number))
+                if (double.TryParse(i, out double number))
                 {
                     OurStack.Push(i);
                 }
@@ -398,7 +423,12 @@ namespace AlgorithmLab3
 
             foreach (string sequenceInstance in partedSequence)
             {
-                if (int.TryParse(sequenceInstance, out int number))
+                if (sequenceInstance.Contains('.'))
+                {
+                    expression.Append(sequenceInstance.Replace('.', ',') + " ");
+                }
+
+                if (double.TryParse(sequenceInstance, out double number))
                 {
                     expression.Append(sequenceInstance + " ");
                 }
