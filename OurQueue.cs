@@ -10,10 +10,10 @@ namespace AlgorithmLab3
 
     public class OurQueue
     {
-        public static QueueNode first;
-        public static QueueNode last;
+        public QueueNode first;
+        public QueueNode last;
 
-        public static void Enqueue(string data)
+        public void Enqueue(string data)
         {
             QueueNode newElement = new QueueNode(data);
             if (first == null) 
@@ -26,7 +26,7 @@ namespace AlgorithmLab3
                 last = newElement;
             }
         }
-        public static string Dequeue()
+        public string Dequeue()
         {
             string peek = null;
             if (first != null)
@@ -36,18 +36,18 @@ namespace AlgorithmLab3
             }
             return peek;
         }
-        public static string Peek()
+        public string Peek()
         {
             if (first == null)
                 return null;
             return first.data;
         }
 
-        public static bool IsEmpty()
+        public bool IsEmpty()
         {
             return first == null;
         }
-        public static void Print()
+        public void Print()
         {
             QueueNode current = first;
 
