@@ -30,7 +30,7 @@ namespace AlgorithmLab3
                         Stopwatch timeOfSequence = new Stopwatch();
                         timeOfSequence.Start();
                         Console.WriteLine("Difficulty: " + SolveExpression(expression));
-                        OurStack.Clear();
+
                         timeOfSequence.Stop();
                         timeArray.Add(timeOfSequence.ElapsedTicks / 10000000.0d);
                     }
@@ -146,7 +146,7 @@ namespace AlgorithmLab3
         {
 
             Console.WriteLine("Please, enter path to input.txt");
-            Path:
+        Path:
             string path = Console.ReadLine();
 
             try
@@ -159,7 +159,7 @@ namespace AlgorithmLab3
                 Console.WriteLine("Sorry, but you wrote the path incorrectly! Try again, please.");
                 goto Path;
             }
-            
+
         }
 
         public static double[] SequencesHandler(string[] sequences)
@@ -174,6 +174,8 @@ namespace AlgorithmLab3
 
                 Stack<string> csStack = new Stack<string>();
                 Queue<string> csQueue = new Queue<string>();
+                OurStack ourStack = new OurStack();
+                OurQueue ourQueue = new OurQueue();
 
                 foreach (string sequenceInstance in partedSequence)
                 {
@@ -197,17 +199,17 @@ namespace AlgorithmLab3
                             {
                                 if (isStack)
                                 {
-                                    //ourstack
-                                    OurStack.Push(sequenceInstance.Substring(2));
+                                    //ourStack
+                                    ourStack.Push(sequenceInstance.Substring(2));
                                 }
                                 else
                                 {
-                                    //ourqueue
-                                    OurQueue.Enqueue(sequenceInstance.Substring(2));
+                                    //ourQueue
+                                    ourQueue.Enqueue(sequenceInstance.Substring(2));
                                 }
 
                             }
-                            
+
                             break;
                         case '2':
                             if (isCs)
@@ -227,17 +229,17 @@ namespace AlgorithmLab3
                             {
                                 if (isStack)
                                 {
-                                    //ourstack
-                                    Console.Write(OurStack.Pop() + ", ");
+                                    //ourStack
+                                    Console.Write(ourStack.Pop() + ", ");
                                 }
                                 else
                                 {
-                                    //ourqueue
-                                    Console.Write(OurQueue.Dequeue() + ", ");
+                                    //ourQueue
+                                    Console.Write(ourQueue.Dequeue() + ", ");
                                 }
 
                             }
-                            
+
                             break;
                         case '3':
                             if (isCs)
@@ -271,17 +273,17 @@ namespace AlgorithmLab3
                             {
                                 if (isStack)
                                 {
-                                    //ourstack
-                                    Console.Write(OurStack.Top() + ", ");
+                                    //ourStack
+                                    Console.Write(ourStack.Top() + ", ");
                                 }
                                 else
                                 {
-                                    //ourqueue
-                                    Console.Write(OurQueue.Peek() + ", ");
+                                    //ourQueue
+                                    Console.Write(ourQueue.Peek() + ", ");
                                 }
 
                             }
-                            
+
                             break;
                         case '4':
                             if (isCs)
@@ -301,17 +303,17 @@ namespace AlgorithmLab3
                             {
                                 if (isStack)
                                 {
-                                    //ourstack
-                                    Console.Write(Convert.ToString(OurStack.IsEmpty()) + ", ");
+                                    //ourStack
+                                    Console.Write(Convert.ToString(ourStack.IsEmpty()) + ", ");
                                 }
                                 else
                                 {
-                                    //ourqueue
-                                    Console.Write(Convert.ToString(OurQueue.IsEmpty()) + ", ");
+                                    //ourQueue
+                                    Console.Write(Convert.ToString(ourQueue.IsEmpty()) + ", ");
                                 }
 
                             }
-                            
+
                             break;
                         case '5':
                             if (isCs)
@@ -331,13 +333,13 @@ namespace AlgorithmLab3
                             {
                                 if (isStack)
                                 {
-                                    //ourstack
-                                    OurStack.Print();
+                                    //ourStack
+                                    ourStack.Print();
                                 }
                                 else
                                 {
-                                    //ourqueue
-                                    OurQueue.Print();
+                                    //ourQueue
+                                    ourQueue.Print();
                                 }
 
                             }
@@ -349,7 +351,7 @@ namespace AlgorithmLab3
                     }
 
                 }
-                OurStack.Clear();
+                ourStack.Clear();
                 timeOfSequence.Stop();
                 timeArray[i] = timeOfSequence.ElapsedTicks / 10000000.0d;
             }
@@ -358,6 +360,7 @@ namespace AlgorithmLab3
 
         public static double SolveExpression(string expression)//СЮДА постфиксную форму передавать
         {
+            OurStack ourStack = new OurStack();
 
             string[] partedExpression = expression.Split(" ");
             int difficulty = 0;
@@ -368,7 +371,7 @@ namespace AlgorithmLab3
             {
                 if (double.TryParse(i, out double number))
                 {
-                    OurStack.Push(i);
+                    ourStack.Push(i);
                 }
                 else
                 {
@@ -376,49 +379,50 @@ namespace AlgorithmLab3
                     switch (i)//(+, -, *, :, ^, ln, cos, sin, sqrt, «)». 
                     {
                         case "+":
-                            OurStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(OurStack.topElem.prevElem.data) + Convert.ToDouble(OurStack.topElem.data));
-                            OurStack.Pop();
+                            ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) + Convert.ToDouble(ourStack.topElem.data));
+                            ourStack.Pop();
                             break;
                         case "-":
-                            OurStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(OurStack.topElem.prevElem.data) - Convert.ToDouble(OurStack.topElem.data));
-                            OurStack.Pop();
+                            ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) - Convert.ToDouble(ourStack.topElem.data));
+                            ourStack.Pop();
                             break;
                         case "*":
-                            OurStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(OurStack.topElem.prevElem.data) * Convert.ToDouble(OurStack.topElem.data));
-                            OurStack.Pop();
+                            ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) * Convert.ToDouble(ourStack.topElem.data));
+                            ourStack.Pop();
                             break;
                         case "/":
                         case ":":
-                            OurStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(OurStack.topElem.prevElem.data) / Convert.ToDouble(OurStack.topElem.data));
-                            OurStack.Pop();
+                            ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) / Convert.ToDouble(ourStack.topElem.data));
+                            ourStack.Pop();
                             break;
                         case "^":
-                            OurStack.topElem.prevElem.data = Convert.ToString(Math.Pow(Convert.ToDouble(OurStack.topElem.prevElem.data), Convert.ToDouble(OurStack.topElem.data)));
-                            OurStack.Pop();
+                            ourStack.topElem.prevElem.data = Convert.ToString(Math.Pow(Convert.ToDouble(ourStack.topElem.prevElem.data), Convert.ToDouble(ourStack.topElem.data)));
+                            ourStack.Pop();
                             break;
                         case "ln":
-                            OurStack.topElem.data = Convert.ToString(Math.Log(Convert.ToDouble(OurStack.topElem.data)));
+                            ourStack.topElem.data = Convert.ToString(Math.Log(Convert.ToDouble(ourStack.topElem.data)));
                             break;
                         case "cos":
-                            OurStack.topElem.data = Convert.ToString(Math.Cos(Convert.ToDouble(OurStack.topElem.data)));
+                            ourStack.topElem.data = Convert.ToString(Math.Cos(Convert.ToDouble(ourStack.topElem.data)));
                             break;
                         case "sin":
-                            OurStack.topElem.data = Convert.ToString(Math.Sin(Convert.ToDouble(OurStack.topElem.data)));
+                            ourStack.topElem.data = Convert.ToString(Math.Sin(Convert.ToDouble(ourStack.topElem.data)));
                             break;
                         case "sqrt":
-                            OurStack.topElem.data = Convert.ToString(Math.Sqrt(Convert.ToDouble(OurStack.topElem.data)));
+                            ourStack.topElem.data = Convert.ToString(Math.Sqrt(Convert.ToDouble(ourStack.topElem.data)));
                             break;
                     }
                 }
             }
-            Console.WriteLine("Result: " + OurStack.Pop());
+            Console.WriteLine("Result: " + ourStack.Pop());
+            ourStack.Clear();
             return difficulty;
         }
 
         public static string[] InFixToPostFix(string[] partedSequence)
         {
             StringBuilder expression = new StringBuilder();
-
+            OurStack ourStack = new OurStack();
 
 
             foreach (string sequenceInstance in partedSequence)
@@ -434,37 +438,37 @@ namespace AlgorithmLab3
                 }
                 else if (sequenceInstance == "sin" || sequenceInstance == "cos" || sequenceInstance == "sqrt" || sequenceInstance == "ln" || sequenceInstance == "(")
                 {
-                    OurStack.Push(sequenceInstance);
+                    ourStack.Push(sequenceInstance);
                 }
                 else if (sequenceInstance == ")")
                 {
 
 
 
-                    while (OurStack.Top() != "(")
+                    while (ourStack.Top() != "(")
                     {
-                        expression.Append(OurStack.Pop() + " ");
+                        expression.Append(ourStack.Pop() + " ");
                     }
-                    OurStack.Pop();
+                    ourStack.Pop();
                 }
                 else if (sequenceInstance == "+" || sequenceInstance == "-" || sequenceInstance == "*" || sequenceInstance == "/" || sequenceInstance == ":" || sequenceInstance == "^")
                 {
-                    while (!OurStack.IsEmpty() && ((OurStack.Top() == "^") || ((OurStack.Top() == "*" || OurStack.Top() == "/" || OurStack.Top() == ":" || OurStack.Top() == "^") && (sequenceInstance != "^")) || ((OurStack.Top() == "+" || OurStack.Top() == "-") && (sequenceInstance == "+" || sequenceInstance == "-"))))
+                    while (!ourStack.IsEmpty() && ((ourStack.Top() == "^") || ((ourStack.Top() == "*" || ourStack.Top() == "/" || ourStack.Top() == ":" || ourStack.Top() == "^") && (sequenceInstance != "^")) || ((ourStack.Top() == "+" || ourStack.Top() == "-") && (sequenceInstance == "+" || sequenceInstance == "-"))))
                     {
-                        expression.Append(OurStack.Pop() + " ");
+                        expression.Append(ourStack.Pop() + " ");
                     }
-                    OurStack.Push(sequenceInstance);
+                    ourStack.Push(sequenceInstance);
                 }
             }
 
 
 
-            while (!OurStack.IsEmpty())
+            while (!ourStack.IsEmpty())
             {
-                if (OurStack.Top() != "(")
-                    expression.Append(OurStack.Pop() + " ");
+                if (ourStack.Top() != "(")
+                    expression.Append(ourStack.Pop() + " ");
                 else
-                    OurStack.Pop();
+                    ourStack.Pop();
             }
             expression.Length--;
 

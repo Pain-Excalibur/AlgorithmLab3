@@ -9,10 +9,10 @@ namespace AlgorithmLab3
     public class OurStack
     {
         //top node
-        public static StackNode topElem;
+        public StackNode topElem;
 
         //Push element to stack
-        public static void Push(string data)
+        public void Push(string data)
         {
             StackNode nodeToAdd = new StackNode()
             {
@@ -23,7 +23,7 @@ namespace AlgorithmLab3
         }
 
         //Pop element from stack
-        public static string Pop() 
+        public string Pop() 
         {
             if (topElem == null)
             {
@@ -35,7 +35,7 @@ namespace AlgorithmLab3
         }
 
         //Return top element
-        public static string Top() 
+        public string Top() 
         {
             if (topElem == null)
             {
@@ -45,13 +45,13 @@ namespace AlgorithmLab3
         }
 
         //Returns 1 if stack is empty
-        public static bool IsEmpty()
+        public bool IsEmpty()
         {
             return topElem == null;
         }
 
         
-        public static void Print()
+        public void Print()
         {
             StackNode current = topElem;
 
@@ -62,7 +62,7 @@ namespace AlgorithmLab3
             }
         }
 
-        public static void Clear()
+        public void Clear()
         {
             topElem = null;
         }
