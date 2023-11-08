@@ -66,7 +66,49 @@ namespace AlgorithmLab3
         {
             topElem = null;
         }
-        
+
+        public void Reverse()
+        {
+            if (this.IsEmpty())
+                return;
+            StackNode previousNode = null;
+
+            StackNode currentNode = topElem;
+            StackNode nextNode = topElem.prevElem;
+
+
+            while (nextNode != null)
+            {
+                currentNode.prevElem = previousNode;
+                previousNode = currentNode;
+                currentNode = nextNode;
+                nextNode = currentNode.prevElem;
+            }
+            currentNode.prevElem = previousNode;
+            topElem = currentNode;
+        }
+
+        public void BotToTop()
+        {
+            StackNode current = topElem;
+            while (current.prevElem.prevElem != null)
+            {
+                current = current.prevElem;
+            }
+            this.Push(current.prevElem.data);
+            current.prevElem = null;
+        }
+
+        public void TopToBot()
+        {
+            StackNode current = topElem;
+            while (current.prevElem != null)
+            {
+                current = current.prevElem;
+            }
+            current.prevElem = new StackNode() { data = Top() };
+            this.Pop();
+        }
     }
 
     //node

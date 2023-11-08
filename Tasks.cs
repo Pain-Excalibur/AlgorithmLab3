@@ -460,8 +460,6 @@ namespace AlgorithmLab3
                 }
             }
 
-
-
             while (!ourStack.IsEmpty())
             {
                 if (ourStack.Top() != "(")
