@@ -80,7 +80,7 @@ namespace AlgorithmLab3
         {
             topElem = null;
         }
-
+      
         public void Reverse()//1
         {
             if (this.IsEmpty())
@@ -123,6 +123,7 @@ namespace AlgorithmLab3
             current.prevElem = new StackNode() { data = Top() };
             this.Pop();
         }
+
         public int DifElems()//3
         {
             HashSet<int> uniqueElems = new HashSet<int>();
@@ -324,7 +325,6 @@ namespace AlgorithmLab3
             }
 
         }
-
     }
 
     //node
