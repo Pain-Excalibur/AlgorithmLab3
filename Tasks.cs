@@ -459,7 +459,6 @@ namespace AlgorithmLab3
                     ourStack.Push(sequenceInstance);
                 }
             }
-
             while (!ourStack.IsEmpty())
             {
                 if (ourStack.Top() != "(")
