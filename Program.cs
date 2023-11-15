@@ -12,14 +12,5 @@ class Program
     {
         //Tasks.Start();
         //Task3.Start();
-        OurStack s = new OurStack();
-
-        s.Push("1");
-        s.Push("2");
-        s.Push("3");
-        s.Push("4");
-        s.TopToBot();
-        s.Print();
     }
-
 }
