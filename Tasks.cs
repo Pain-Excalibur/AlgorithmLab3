@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleApp1;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -73,6 +74,29 @@ namespace AlgorithmLab3
 
         public static void Survey()
         {
+        Tasks:
+            Console.WriteLine("Tasks 1-2(1) or Task 3(3) or Task 4(4)");
+            string tasks = Console.ReadLine();
+            switch(tasks)
+            {
+                case "3":
+                    Task3.Start();
+                    break;
+                    case "4":
+                    Task4In.Start();
+                    break;
+                    case "1":
+                    case "2":
+                    break;
+                default:
+                    Console.WriteLine("Sorry, but we have no such option! Try again, please.");
+                    goto Tasks;
+                    break;
+
+
+            }
+
+
         SoQ:
             Console.WriteLine("Stack(s) or Queue(q)?");
             string SoQ = Console.ReadLine();

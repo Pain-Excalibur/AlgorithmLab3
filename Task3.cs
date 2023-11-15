@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace ConsoleApp1
@@ -12,8 +13,8 @@ namespace ConsoleApp1
         public static Stack<int> stack = new Stack<int>();
         public static void StackTask()
         {
-
-            var strNumber = new StreamReader("C:\\Users\\Елена\\Desktop\\number.txt");
+            Console.WriteLine("Enter path:");
+            var strNumber = new StreamReader(Console.ReadLine());
             string str = strNumber.ReadToEnd();
             int number = int.Parse(str);
             int mode = int.Parse(Console.ReadLine());
