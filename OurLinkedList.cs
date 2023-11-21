@@ -335,7 +335,6 @@ namespace AlgorithmLab3
                 current = current.Previous;
             }
         }
-
     }
     public class Node<T>
     {
