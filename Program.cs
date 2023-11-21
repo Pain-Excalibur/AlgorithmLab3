@@ -10,7 +10,6 @@ class Program
 {
     public static void Main()
     {
-        //Tasks.Start();
-        //Task3.Start();
+        Tasks12.Start();
     }
 }
