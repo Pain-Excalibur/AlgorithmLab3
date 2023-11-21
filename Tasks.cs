@@ -85,7 +85,7 @@ namespace AlgorithmLab3
                     case "4":
                     Task4In.Start();
                     break;
-                    case "1":
+                    case "1":+
                     case "2":
                     break;
                 default:
