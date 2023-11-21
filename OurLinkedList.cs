@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AlgorithmLab3
 {
@@ -65,22 +66,28 @@ namespace AlgorithmLab3
             size++;
         }
 
-        protected Node<T> RemoveFromBottom()
+        protected T RemoveFromBottom()
         {
             if (this.IsEmpty())
                 throw new NullReferenceException();
             Node<T> nodeToDelete = this.bottom;
-            this.bottom = bottom.Next;
-            this.bottom.Previous = null;
+            if (this.Size() != 1)
+            {
+                this.bottom.Next.Previous = null;
+                this.bottom = bottom.Next;
+            }
+            else
+            {
+                this.top = this.bottom = null;
+            }
             size--;
-            return nodeToDelete;
+            return nodeToDelete.Data;
         }
 
-        protected Node<T> RemoveFromTop()
+        protected T RemoveFromTop()
         {
             if (this.IsEmpty())
                 throw new NullReferenceException();
-
             Node<T> nodeToDelete = this.top;
             if (this.Size() != 1)
             {
@@ -92,7 +99,7 @@ namespace AlgorithmLab3
                 this.top = this.bottom = null;
             }
             size--;
-            return nodeToDelete;
+            return nodeToDelete.Data;
         }
 
         public bool IsEmpty()
@@ -115,6 +122,18 @@ namespace AlgorithmLab3
             return array;
         }
 
+        public bool IsElem(T data)
+        {
+            Node<T> current = this.top;
+            while(current != null)
+            {
+                if (EqualityComparer<T>.Default.Equals(data, current.Data))
+                    return true;
+                current = current.Previous;
+            }
+            return false;
+        }
+
         //task4
 
         public void Reverse()//1 
@@ -131,9 +150,14 @@ namespace AlgorithmLab3
             (this.top, this.bottom) = (this.bottom, this.top);
         }
 
-        public void SwapEnds()//2
+        public void TopToBot()//2.1
         {
-            (this.top.Data, this.bottom.Data) = (this.bottom.Data, this.top.Data);
+            this.AddToBottom(this.RemoveFromTop());
+        }
+
+        public void BotToTop()//2.2
+        {
+            this.AddToTop(this.RemoveFromBottom());
         }
 
         public int CountDifElems()//3
@@ -152,22 +176,162 @@ namespace AlgorithmLab3
         public void MakeUnique()//4
         {
             HashSet<T> uniqueElems = new HashSet<T>();
+            int previousSize = size;
 
             Node<T> current = this.top;
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < previousSize; i++)
             {
+                if (!uniqueElems.Contains(current.Data))
+                    this.AddToTop(current.Data);
                 uniqueElems.Add(current.Data);
                 current = current.Previous;
             }
 
-            current = this.top;
-            bool doubleChecker = false;
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < previousSize; i++)
             {
-                if(doubleChecker)
-                    //TODO
-                if(uniqueElems.Contains(current.Data))
-                    doubleChecker = true;
+                this.RemoveFromBottom();
+            }
+            this.Reverse();
+        }
+
+        public void SelfInsert(T data)//5
+        {
+            OurLinkedList<T> self = new OurLinkedList<T>();
+            OurLinkedList<T> temp = new OurLinkedList<T>();
+
+            Node<T> current = this.top;
+            while (current!=null)
+            {
+                self.AddToBottom(current.Data);
+                current = current.Previous;
+            }
+            
+            do
+            {
+                temp.AddToTop(this.RemoveFromBottom());
+            } while (!this.IsEmpty() && !EqualityComparer<T>.Default.Equals(data, temp.top.Data));
+
+            while (self.size > 0)
+            {
+                this.AddToBottom(self.RemoveFromTop());
+            }
+
+            while (temp.size > 0)
+            {
+                this.AddToBottom(temp.RemoveFromTop());
+            }
+        }
+
+        public void Insert(T place, T elem)
+        {
+            OurLinkedList<T> temp = new OurLinkedList<T>();
+
+            do
+            {
+                temp.AddToTop(this.RemoveFromBottom());
+            } while (!this.IsEmpty() && !EqualityComparer<T>.Default.Equals(place, temp.top.Data));
+
+            this.AddToBottom(elem);
+
+            while (temp.size > 0)
+            {
+                this.AddToBottom(temp.RemoveFromTop());
+            }
+        }
+
+        public void OrderedInsert(T data)//6
+        {
+            this.Insert(data, data);
+        }
+
+        public void DeleteAll(T data)//7
+        {
+            if (!this.IsElem(data))
+                return;
+
+            OurLinkedList<T> temp = new OurLinkedList<T>();
+
+            while (!EqualityComparer<T>.Default.Equals(data, this.bottom.Data))
+            {
+                temp.AddToTop(this.RemoveFromBottom());
+            }
+
+            this.RemoveFromBottom();
+
+            while (temp.size > 0)
+            {
+                this.AddToBottom(temp.RemoveFromTop());
+            }
+            this.DeleteAll(data);
+        }
+
+        public void IfElemInsert(T place, T elem)//8
+        {
+            if (this.IsElem(place))
+            {
+                this.Insert(place, elem);
+            }
+                
+        }
+
+        public void Append(OurLinkedList<T> newList)//9 оформить ввод считывание из файла
+        {
+            newList.Reverse();
+            Node<T> current = newList.top;
+
+            while (current != null)
+            {
+                this.AddToTop(current.Data);
+                current = current.Previous;
+            }
+        }
+
+        public OurLinkedList<T> Split(T divider)//10
+        {
+            if (!this.IsElem(divider))
+                return null;
+
+            OurLinkedList<T> top = new OurLinkedList<T>();
+
+            while (this.top != null && !EqualityComparer<T>.Default.Equals(this.top.Data, divider))
+            {
+                top.AddToTop(this.RemoveFromTop());
+            }
+            top.Reverse();
+            return top;
+        }
+
+        public void Double()//11
+        {
+            OurLinkedList<T> self = new OurLinkedList<T>();
+            OurLinkedList<T> temp = new OurLinkedList<T>();
+
+            Node<T> current = this.top;
+            while (current != null)
+            {
+                self.AddToBottom(current.Data);
+                current = current.Previous;
+            }
+
+            while (self.size > 0)
+            {
+                this.AddToBottom(self.RemoveFromTop());
+            }
+        }
+
+        public void Swap(T first, T second)//12
+        {
+            Node<T> current = this.top;
+            while (current != null)
+            {
+                if(EqualityComparer<T>.Default.Equals(current.Data, first))
+                {
+                    current.Data = second;
+                }
+                else if (EqualityComparer<T>.Default.Equals(current.Data, second))
+                {
+                    current.Data = first;
+                }
                 current = current.Previous;
             }
         }

@@ -15,7 +15,7 @@ namespace AlgorithmLab3
         }
         public T Dequeue()
         {
-            return this.RemoveFromTop().Data;
+            return this.RemoveFromTop();
         }
         public T Peek()
         {

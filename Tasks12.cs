@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AlgorithmLab3
 {
-    internal class Tasks
+    internal class Tasks12
     {
         public static bool isStack = false;
         public static bool isTime = false;
@@ -80,18 +80,19 @@ namespace AlgorithmLab3
             switch(tasks)
             {
                 case "3":
-                    Task3.Start();
+                    Task3.Choice();
+                    Environment.Exit(0);
                     break;
-                    case "4":
+                case "4":
                     Task4.Start();
+                    Environment.Exit(0);
                     break;
-                    case "1":
-                    case "2":
+                case "1":
+                case "2":
                     break;
                 default:
                     Console.WriteLine("Sorry, but we have no such option! Try again, please.");
                     goto Tasks;
-                    break;
 
 
             }
@@ -401,44 +402,45 @@ namespace AlgorithmLab3
                     switch (i)
                     {
                         case "+":
-                            //ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) + Convert.ToDouble(ourStack.topElem.data));
+                            ourStack.Push(Convert.ToString(Convert.ToDouble(ourStack.Pop()) + Convert.ToDouble(ourStack.Pop())));
                             ourStack.Pop();
                             break;
                         case "-":
-                            //ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) - Convert.ToDouble(ourStack.topElem.data));
+                            string substractor = ourStack.Pop();
+                            ourStack.Push(Convert.ToString(Convert.ToDouble(ourStack.Pop()) - Convert.ToDouble(substractor)));
                             ourStack.Pop();
                             break;
                         case "*":
-                            //ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) * Convert.ToDouble(ourStack.topElem.data));
+                            ourStack.Push(Convert.ToString(Convert.ToDouble(ourStack.Pop()) * Convert.ToDouble(ourStack.Pop())));
                             ourStack.Pop();
                             break;
                         case "/":
                         case ":":
-                            //ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) / Convert.ToDouble(ourStack.topElem.data));
-                            ourStack.Pop();
+                            string divider = ourStack.Pop();
+                            ourStack.Push(Convert.ToString(Convert.ToDouble(ourStack.Pop()) / Convert.ToDouble(divider)));
                             break;
                         case "^":
-                            //ourStack.topElem.prevElem.data = Convert.ToString(Math.Pow(Convert.ToDouble(ourStack.topElem.prevElem.data), Convert.ToDouble(ourStack.topElem.data)));
-                            ourStack.Pop();
+                            string power = ourStack.Pop();
+                            ourStack.Push(Convert.ToString(Math.Pow(Convert.ToDouble(ourStack.Pop()), Convert.ToDouble(power))));
                             break;
                         case "ln":
-                            //ourStack.topElem.data = Convert.ToString(Math.Log(Convert.ToDouble(ourStack.topElem.data)));
+                            ourStack.Push(Convert.ToString(Math.Log(Convert.ToDouble(ourStack.Pop()))));
                             break;
                         case "cos":
-                            //ourStack.topElem.data = Convert.ToString(Math.Cos(Convert.ToDouble(ourStack.topElem.data)));
+                            ourStack.Push(Convert.ToString(Math.Cos(Convert.ToDouble(ourStack.Pop()))));
                             break;
                         case "sin":
-                            //ourStack.topElem.data = Convert.ToString(Math.Sin(Convert.ToDouble(ourStack.topElem.data)));
+                            ourStack.Push(Convert.ToString(Math.Sin(Convert.ToDouble(ourStack.Pop()))));
                             break;
                         case "sqrt":
-                            //ourStack.topElem.data = Convert.ToString(Math.Sqrt(Convert.ToDouble(ourStack.topElem.data)));
+                            ourStack.Push(Convert.ToString(Math.Sqrt(Convert.ToDouble(ourStack.Pop()))));
                             break;
                     }
                 }
             }
             Console.WriteLine("Result: " + ourStack.Pop());
             return difficulty;
-        }//TODO rewrite
+        }
 
         public static string[] InFixToPostFix(string[] partedSequence)
         {
