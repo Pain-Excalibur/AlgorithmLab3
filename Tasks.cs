@@ -83,7 +83,7 @@ namespace AlgorithmLab3
                     Task3.Start();
                     break;
                     case "4":
-                    Task4In.Start();
+                    Task4.Start();
                     break;
                     case "1":
                     case "2":
@@ -197,8 +197,8 @@ namespace AlgorithmLab3
 
                 Stack<string> csStack = new Stack<string>();
                 Queue<string> csQueue = new Queue<string>();
-                OurStack ourStack = new OurStack();
-                OurQueue ourQueue = new OurQueue();
+                OurStack<string> ourStack = new OurStack<string>();
+                OurQueue<string> ourQueue = new OurQueue<string>();
 
                 foreach (string sequenceInstance in partedSequence)
                 {
@@ -374,7 +374,6 @@ namespace AlgorithmLab3
                     }
 
                 }
-                ourStack.Clear();
                 timeOfSequence.Stop();
                 timeArray[i] = timeOfSequence.ElapsedTicks / 10000000.0d;
             }
@@ -383,7 +382,7 @@ namespace AlgorithmLab3
 
         public static double SolveExpression(string expression)
         {
-            OurStack ourStack = new OurStack();
+            OurStack<string> ourStack = new OurStack<string>();
 
             string[] partedExpression = expression.Split(" ");
             int difficulty = 0;
@@ -402,50 +401,49 @@ namespace AlgorithmLab3
                     switch (i)
                     {
                         case "+":
-                            ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) + Convert.ToDouble(ourStack.topElem.data));
+                            //ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) + Convert.ToDouble(ourStack.topElem.data));
                             ourStack.Pop();
                             break;
                         case "-":
-                            ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) - Convert.ToDouble(ourStack.topElem.data));
+                            //ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) - Convert.ToDouble(ourStack.topElem.data));
                             ourStack.Pop();
                             break;
                         case "*":
-                            ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) * Convert.ToDouble(ourStack.topElem.data));
+                            //ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) * Convert.ToDouble(ourStack.topElem.data));
                             ourStack.Pop();
                             break;
                         case "/":
                         case ":":
-                            ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) / Convert.ToDouble(ourStack.topElem.data));
+                            //ourStack.topElem.prevElem.data = Convert.ToString(Convert.ToDouble(ourStack.topElem.prevElem.data) / Convert.ToDouble(ourStack.topElem.data));
                             ourStack.Pop();
                             break;
                         case "^":
-                            ourStack.topElem.prevElem.data = Convert.ToString(Math.Pow(Convert.ToDouble(ourStack.topElem.prevElem.data), Convert.ToDouble(ourStack.topElem.data)));
+                            //ourStack.topElem.prevElem.data = Convert.ToString(Math.Pow(Convert.ToDouble(ourStack.topElem.prevElem.data), Convert.ToDouble(ourStack.topElem.data)));
                             ourStack.Pop();
                             break;
                         case "ln":
-                            ourStack.topElem.data = Convert.ToString(Math.Log(Convert.ToDouble(ourStack.topElem.data)));
+                            //ourStack.topElem.data = Convert.ToString(Math.Log(Convert.ToDouble(ourStack.topElem.data)));
                             break;
                         case "cos":
-                            ourStack.topElem.data = Convert.ToString(Math.Cos(Convert.ToDouble(ourStack.topElem.data)));
+                            //ourStack.topElem.data = Convert.ToString(Math.Cos(Convert.ToDouble(ourStack.topElem.data)));
                             break;
                         case "sin":
-                            ourStack.topElem.data = Convert.ToString(Math.Sin(Convert.ToDouble(ourStack.topElem.data)));
+                            //ourStack.topElem.data = Convert.ToString(Math.Sin(Convert.ToDouble(ourStack.topElem.data)));
                             break;
                         case "sqrt":
-                            ourStack.topElem.data = Convert.ToString(Math.Sqrt(Convert.ToDouble(ourStack.topElem.data)));
+                            //ourStack.topElem.data = Convert.ToString(Math.Sqrt(Convert.ToDouble(ourStack.topElem.data)));
                             break;
                     }
                 }
             }
             Console.WriteLine("Result: " + ourStack.Pop());
-            ourStack.Clear();
             return difficulty;
-        }
+        }//TODO rewrite
 
         public static string[] InFixToPostFix(string[] partedSequence)
         {
             StringBuilder expression = new StringBuilder();
-            OurStack ourStack = new OurStack();
+            OurStack<string> ourStack = new OurStack<string>();
 
 
             foreach (string sequenceInstance in partedSequence)

@@ -11,7 +11,7 @@ namespace AlgorithmLab3
     {
         public void Enqueue(T data)
         {
-            this.AddToBot(data);
+            this.AddToBottom(data);
         }
         public T Dequeue()
         {

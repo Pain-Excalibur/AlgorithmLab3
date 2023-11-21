@@ -7,7 +7,7 @@ using System;
 
 namespace AlgorithmLab3
 {
-    internal class Task4In
+    internal class Task4
     {
         //append
         public static void Start()
@@ -17,19 +17,20 @@ namespace AlgorithmLab3
             Console.WriteLine("Enter path to second Stack");
             string[] second = Tasks.ReadSeqFromFile();
 
-            OurStack s1 = new OurStack();
-            foreach(string f in first)
+            OurStack<string> s1 = new OurStack<string>();
+            foreach (string f in first)
             {
                 s1.Push(f);
             }
 
-            OurStack s2 = new OurStack();
+            OurStack<string> s2 = new OurStack<string>();
             foreach (string s in second)
             {
                 s2.Push(s);
             }
 
-            s1.Append(s2);
+            //TODO
+            //s1.Append(s2);
         }
     }
 }

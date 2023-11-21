@@ -9,97 +9,34 @@ namespace AlgorithmLab3
 {
     public class OurStack<T> : OurLinkedList<T>
     {
-        //Push element to stack
         public void Push(T data)
         {
             this.AddToTop(data);
         }
 
-        //Pop element from stack
         public T Pop() 
         {
             return this.RemoveFromTop().Data;
         }
 
-        //Return top element
         public T Top() 
         {
             return this.GetTop().Data;
         }
 
-        //public bool IsElem(string data)
-        //{
-        //    StackNode current = topElem;
+        ////////////////public bool IsElem(string data)
+        ////////////////{
+        ////////////////    StackNode current = topElem;
 
-        //    while (current != null)
-        //    {
-        //        if(data == current.data)
-        //            return true;
-        //        current = current.prevElem;
-        //    }
-        //    return false;
-        //}
+        ////////////////    while (current != null)
+        ////////////////    {
+        ////////////////        if(data == current.data)
+        ////////////////            return true;
+        ////////////////        current = current.prevElem;
+        ////////////////    }
+        ////////////////    return false;
+        ////////////////}
 
-        //public void Clear()
-        //{
-        //    topElem = null;
-        //}
-      
-        //public void Reverse()//1
-        //{
-        //    if (this.IsEmpty())
-        //        return;
-        //    StackNode previousNode = null;
-
-        //    StackNode currentNode = topElem;
-        //    StackNode nextNode = topElem.prevElem;
-
-
-        //    while (nextNode != null)
-        //    {
-        //        currentNode.prevElem = previousNode;
-        //        previousNode = currentNode;
-        //        currentNode = nextNode;
-        //        nextNode = currentNode.prevElem;
-        //    }
-        //    currentNode.prevElem = previousNode;
-        //    topElem = currentNode;
-        //}
-
-        //public void BotToTop()//2.1
-        //{
-        //    StackNode current = topElem;
-        //    while (current.prevElem.prevElem != null)
-        //    {
-        //        current = current.prevElem;
-        //    }
-        //    this.Push(current.prevElem.data);
-        //    current.prevElem = null;
-        //}
-
-        //public void TopToBot()//2.2
-        //{
-        //    StackNode current = topElem;
-        //    while (current.prevElem != null)
-        //    {
-        //        current = current.prevElem;
-        //    }
-        //    current.prevElem = new StackNode() { data = Top() };
-        //    this.Pop();
-        //}
-
-        //public int DifElems()//3
-        //{
-        //    HashSet<int> uniqueElems = new HashSet<int>();
-        //    StackNode current = topElem;
-
-        //    while (current != null)
-        //    {
-        //        uniqueElems.Add(Convert.ToInt32(current.data));
-        //        current = current.prevElem;
-        //    }
-        //    return uniqueElems.Count;
-        //}
         //public void MakeUnique()//4
         //{
         //    OurStack unique = new OurStack();

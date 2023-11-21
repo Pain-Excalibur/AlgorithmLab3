@@ -35,8 +35,6 @@ namespace AlgorithmLab3
             {
                 this.top = newNode;
                 this.bottom = newNode;
-                this.top.Previous = this.bottom;
-                this.bottom.Next = this.top;
             }
             else
             {
@@ -48,7 +46,7 @@ namespace AlgorithmLab3
             size++;
         }
 
-        protected void AddToBot(T data)
+        protected void AddToBottom(T data)
         {
             Node<T> newNode = new Node<T>(data);
 
@@ -56,8 +54,6 @@ namespace AlgorithmLab3
             {
                 this.top = newNode;
                 this.bottom = newNode;
-                this.top.Previous = this.bottom;
-                this.bottom.Next = this.top;
             }
             else
             {
@@ -69,29 +65,39 @@ namespace AlgorithmLab3
             size++;
         }
 
-        protected Node<T> RemoveFromTop()
+        protected Node<T> RemoveFromBottom()
         {
             if (this.IsEmpty())
                 throw new NullReferenceException();
             Node<T> nodeToDelete = this.bottom;
             this.bottom = bottom.Next;
+            this.bottom.Previous = null;
             size--;
             return nodeToDelete;
         }
 
-        protected Node<T> RemoveFromBot()
+        protected Node<T> RemoveFromTop()
         {
             if (this.IsEmpty())
                 throw new NullReferenceException();
+
             Node<T> nodeToDelete = this.top;
-            this.top = top.Previous;
+            if (this.Size() != 1)
+            {
+                this.top.Previous.Next = null;
+                this.top = top.Previous;
+            }
+            else
+            {
+                this.top = this.bottom = null;
+            }
             size--;
             return nodeToDelete;
         }
 
         public bool IsEmpty()
         {
-            return this.top == null;
+            return size == 0;
         }
 
         public T[] Print()
@@ -104,8 +110,66 @@ namespace AlgorithmLab3
             {
                 array[i] = current.Data;
                 Console.Write(array[i]+" ");
+                    current = current.Previous;
             }
             return array;
+        }
+
+        //task4
+
+        public void Reverse()//1 
+        {
+            if (this.IsEmpty())
+                throw new NullReferenceException();
+
+            Node<T> current = this.top;
+            for(int i = 0; i<size;i++)
+            {
+                (current.Next, current.Previous) = (current.Previous, current.Next);
+                current = current.Next;
+            }
+            (this.top, this.bottom) = (this.bottom, this.top);
+        }
+
+        public void SwapEnds()//2
+        {
+            (this.top.Data, this.bottom.Data) = (this.bottom.Data, this.top.Data);
+        }
+
+        public int CountDifElems()//3
+        {
+            HashSet<T> uniqueElems = new HashSet<T>();
+            Node<T> current = this.top;
+
+            for (int i = 0; i < size; i++)
+            {
+                uniqueElems.Add(current.Data);
+                current = current.Previous;
+            }
+            return uniqueElems.Count;
+        }
+
+        public void MakeUnique()//4
+        {
+            HashSet<T> uniqueElems = new HashSet<T>();
+
+            Node<T> current = this.top;
+            for (int i = 0; i < size; i++)
+            {
+                uniqueElems.Add(current.Data);
+                current = current.Previous;
+            }
+
+            current = this.top;
+            bool doubleChecker = false;
+            for (int i = 0; i < size; i++)
+            {
+                if(doubleChecker)
+                    //TODO
+                if(uniqueElems.Contains(current.Data))
+                    doubleChecker = true;
+                current = current.Previous;
+            }
         }
 
     }
@@ -116,7 +180,7 @@ namespace AlgorithmLab3
             Data = data;
         }
         public T Data { get; set; }
-        public Node<T> Previous { get; set; }
-        public Node<T> Next { get; set; }
+        public Node<T>? Previous { get; set; }
+        public Node<T>? Next { get; set; }
     }
 }
